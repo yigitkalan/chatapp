@@ -9,10 +9,7 @@ import (
 
 func Migrate() {
 
-	db, err := database.Connect()
-	if err != nil {
-		panic("failed to connect db")
-	}
+	db := database.Connect()
 
 	db.AutoMigrate(&m.Message{})
 

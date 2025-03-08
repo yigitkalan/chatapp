@@ -2,15 +2,13 @@ package message
 
 import (
 	"database/sql"
-
-	"github.com/google/uuid"
-	"gorm.io/gorm"
+	"github.com/yigitkalan/chatapp/internal/bases"
 )
 
 type Message struct {
-	gorm.Model
+	bases.Model
 	Text   string
-	FromId uuid.UUID
-	ToId   uuid.UUID
+	FromId uint
+	ToId   uint
 	Time   sql.NullTime
 }

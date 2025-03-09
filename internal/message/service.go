@@ -19,3 +19,11 @@ func GetMessageById(id uint) Message {
 	return result
 
 }
+
+func CreateMessage(message Message) {
+	err := GetRepo().Add(message)
+
+	if err != nil {
+		panic("Unexpected Error")
+	}
+}

@@ -7,12 +7,10 @@ import (
 
 func main() {
 	router := gin.Default()
-    router.HandleMethodNotAllowed = true
+	router.HandleMethodNotAllowed = true
+	api.MapMessageRoutes(router)
 
-	router.GET("/api/messages", api.GetAllMessagesHandler)
-    router.GET("/api/messages/:id", api.GetMessageByIdHandler)
 
 	router.Run()
 
 }
-

@@ -7,7 +7,12 @@ import (
 
 type Model struct {
 	ID        uint `gorm:"primaryKey;autoIncrement"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt sql.NullTime `gorm:"index"`
+	CreatedAt sql.NullTime
+	UpdatedAt sql.NullTime
+	IsDeleted bool
+}
+
+func (m *Model) SetDefaults(){
+    m.CreatedAt.Time = time.Now()
+    m.IsDeleted = false;
 }

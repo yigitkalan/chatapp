@@ -1,8 +1,7 @@
 package message
 
 import (
-	"database/sql"
-	"time"
+	"fmt"
 	"github.com/yigitkalan/chatapp/database"
 	"gorm.io/gorm"
 )
@@ -25,19 +24,30 @@ func GetRepo() MessageRepository {
 }
 
 func (mr *messageRepositoryImpl) Update(message Message) error {
-	result := mr.connection.Save(&message)
+
+	var msg Message
+	mr.connection.First(&msg, message.ID)
+	fmt.Println(msg)
+	msg = message
+	if msg.ID == 0 {
+		panic("Message Not Found")
+	}
+	result := mr.connection.Save(&msg)
 	return result.Error
 }
 
 func (mr *messageRepositoryImpl) Delete(id uint) error {
 
 	msg := Message{}
-	result := mr.connection.Find(&msg, id)
-	msg.DeletedAt = sql.NullTime{Time: time.Now()}
+	mr.connection.First(&msg, id)
+	fmt.Println(msg)
+	msg.IsDeleted = true
+	result := mr.connection.Save(&msg)
 	return result.Error
 }
 
 func (mr *messageRepositoryImpl) Add(message Message) error {
+    message.SetDefaults()
 	result := mr.connection.Create(&message)
 	return result.Error
 }
